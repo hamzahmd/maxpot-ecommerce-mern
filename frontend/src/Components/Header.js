@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   SportsMmaIcon: {
-    marginRight: theme.spacing(1),
+    margin: theme.spacing(1),
   },
   title: {
     flexGrow: 1,
@@ -40,7 +40,7 @@ const Header = () => {
           >
             <SportsMmaIcon />
           </IconButton>
-          <Typography variant='h6' className={classes.title}>
+          <Typography variant='h5' className={classes.title}>
             Maxpot
           </Typography>
 
