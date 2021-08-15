@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 const Footer = () => {
   return (
     <footer>
-      <Box display='flex' justifyContent='center'>
-        Copyright &copy; Maxpot Enterprises
+      <Box display='flex' justifyContent='center' my='2rem'>
+        <Typography>Copyright &copy; Maxpot Enterprises</Typography>
       </Box>
     </footer>
   );

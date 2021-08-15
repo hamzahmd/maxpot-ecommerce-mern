@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   SportsMmaIcon: {
-    margin: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
   title: {
     flexGrow: 1,
@@ -30,7 +30,7 @@ const Header = () => {
   const classes = useStyles();
   return (
     <header className={classes.root}>
-      <AppBar position='sticky'>
+      <AppBar position='sticky' style={{ background: '#1B4E59' }}>
         <Toolbar>
           <IconButton
             // component={Link} to='/'
@@ -46,7 +46,7 @@ const Header = () => {
 
           <Button
             variant='contained'
-            color='primary'
+            style={{ color: '#f4f4f4', background: '#1B4E59' }}
             className={classes.button}
             startIcon={<ShoppingCartIcon />}
           >
@@ -54,11 +54,11 @@ const Header = () => {
           </Button>
           <Button
             variant='contained'
-            color='primary'
+            style={{ color: '#f4f4f4', background: '#1B4E59' }}
             className={classes.button}
             startIcon={<PersonIcon />}
           >
-            Sign in
+            Login
           </Button>
         </Toolbar>
       </AppBar>
