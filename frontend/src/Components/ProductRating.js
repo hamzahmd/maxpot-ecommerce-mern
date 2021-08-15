@@ -7,11 +7,10 @@ const ProductRating = ({ value, text }) => {
       style={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
       }}
     >
-      <Rating value={value} precision={0.5} readOnly />{' '}
-      <span>{text && text}</span>
+      <Rating value={value} precision={0.5} readOnly />
+      <span style={{ paddingLeft: '1rem' }}>{text && text}</span>
     </div>
   );
 };

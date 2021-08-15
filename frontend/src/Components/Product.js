@@ -40,7 +40,7 @@ const Product = ({ product }) => {
               component='p'
               // paragraph
             >
-              {product.description}
+              {product.name}
             </Typography>
             <Typography variant='body2' color='textSecondary' component='div'>
               <ProductRating
