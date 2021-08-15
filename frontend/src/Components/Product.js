@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ProductRating from './ProductRating';
 import {
   Card,
@@ -24,7 +25,7 @@ const Product = ({ product }) => {
   return (
     <Container maxWidth='xs'>
       <Card>
-        <CardActionArea href={`/products/${product._id}`}>
+        <CardActionArea component={Link} to={`/product/${product._id}`}>
           <CardMedia
             className={classes.img}
             component='img'

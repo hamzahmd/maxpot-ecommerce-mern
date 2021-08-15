@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -33,7 +33,8 @@ const Header = () => {
       <AppBar position='sticky' style={{ background: '#1B4E59' }}>
         <Toolbar>
           <IconButton
-            // component={Link} to='/'
+            component={Link}
+            to='/'
             edge='start'
             className={classes.SportsMmaIcon}
             color='inherit'
@@ -45,6 +46,8 @@ const Header = () => {
           </Typography>
 
           <Button
+            component={Link}
+            to='/cart'
             variant='contained'
             style={{ color: '#f4f4f4', background: '#1B4E59' }}
             className={classes.button}
@@ -53,6 +56,8 @@ const Header = () => {
             Cart
           </Button>
           <Button
+            component={Link}
+            to='/login'
             variant='contained'
             style={{ color: '#f4f4f4', background: '#1B4E59' }}
             className={classes.button}
