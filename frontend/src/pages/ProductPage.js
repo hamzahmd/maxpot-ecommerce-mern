@@ -18,7 +18,6 @@ const ProductPage = ({ match }) => {
     name: '',
     image: '',
     description: '',
-
     price: null,
     countInStock: null,
     rating: null,
