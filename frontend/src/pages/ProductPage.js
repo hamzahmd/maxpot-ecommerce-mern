@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import {
   Button,
   Grid,
@@ -10,10 +11,17 @@ import {
   CardContent,
 } from '@material-ui/core';
 import ProductRating from '../Components/ProductRating';
-import products from '../products';
 
 const ProductPage = ({ match }) => {
-  const product = products.find((prod) => prod._id === match.params.id);
+  const [product, setProduct] = useState({});
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${match.params.id}`);
+      setProduct(data);
+    };
+    fetchProduct();
+  }, []);
+
   const { name, image, price, countInStock, rating, description, numReviews } =
     product;
   return (

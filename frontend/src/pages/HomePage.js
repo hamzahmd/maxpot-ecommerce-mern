@@ -1,9 +1,18 @@
-import React, { Fragment } from 'react';
-import products from '../products';
+import React, { Fragment, useEffect, useState } from 'react';
 import Product from '../Components/Product';
+import axios from 'axios';
 import { Grid, Typography } from '@material-ui/core';
 
 const HomePage = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data } = await axios.get('/api/products');
+      setProducts(data);
+    };
+    fetchProducts();
+  }, []);
   return (
     <Fragment>
       <Typography variant='h5' component='h1' style={{ padding: '1.5rem' }}>
