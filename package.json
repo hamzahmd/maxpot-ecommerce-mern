@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Maxpot Ecommerce Shore for MMA Products",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node backend/server",
     "server": "nodemon backend/server",
@@ -21,7 +22,8 @@
   "homepage": "https://github.com/hamzAhmd/maxpot-ecommerce-mern#readme",
   "dependencies": {
     "dotenv": "^10.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.13.7"
   },
   "devDependencies": {
     "concurrently": "^6.2.1",

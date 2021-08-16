@@ -8,7 +8,7 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import SportsMmaIcon from '@material-ui/icons/SportsMma';
+
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PersonIcon from '@material-ui/icons/Person';
 
@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
   },
+  logo: {
+    maxWidth: 40,
+  },
 }));
 const Header = () => {
   const classes = useStyles();
@@ -39,10 +42,10 @@ const Header = () => {
             className={classes.SportsMmaIcon}
             color='inherit'
           >
-            <SportsMmaIcon />
+            <img src='/logo256.png' alt='logo' className={classes.logo} />
           </IconButton>
           <Typography variant='h5' className={classes.title}>
-            Maxpot
+            MAXPOT
           </Typography>
 
           <Button
