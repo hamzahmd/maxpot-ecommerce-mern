@@ -70,6 +70,6 @@ const orderSchema = mongoose.Schema(
   }
 );
 
-const User = mongoose.model('User', userSchema);
+const Order = mongoose.model('Order', orderSchema);
 
-export default User;
+export default Order;

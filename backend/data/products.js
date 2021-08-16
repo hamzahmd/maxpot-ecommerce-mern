@@ -1,6 +1,5 @@
 const products = [
   {
-    _id: '1',
     name: 'MMA Gloves',
     image: '/images/mmagloves.jpg',
     description: 'MMA Gloves ',
@@ -13,7 +12,6 @@ const products = [
   },
 
   {
-    _id: '2',
     name: 'Head Gears',
     image: '/images/headgear.jpg',
     description: 'Head Gears for safety ',
@@ -25,7 +23,6 @@ const products = [
     numReviews: 8,
   },
   {
-    _id: '3',
     name: 'Kick Pads',
     image: '/images/kickpads.jpg',
     description: 'Kick Pads for training ',
@@ -37,7 +34,6 @@ const products = [
     numReviews: 12,
   },
   {
-    _id: '4',
     name: 'Boxing Gloves',
     image: '/images/boxinggloves.jpg',
     description: 'Leather Boxing gloves ',
@@ -50,7 +46,6 @@ const products = [
   },
 
   {
-    _id: '5',
     name: 'Punching Mitts',
     image: '/images/punchingmitts.jpg',
     description: 'Punching Mitts for trainers',
@@ -62,7 +57,6 @@ const products = [
     numReviews: 12,
   },
   {
-    _id: '6',
     name: 'Shinguards',
     image: '/images/shinguards.jpg',
     description: 'Shinguards for safety',
