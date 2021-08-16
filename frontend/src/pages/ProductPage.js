@@ -13,14 +13,24 @@ import {
 import ProductRating from '../Components/ProductRating';
 
 const ProductPage = ({ match }) => {
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState({
+    _id: '',
+    name: '',
+    image: '',
+    description: '',
+
+    price: null,
+    countInStock: null,
+    rating: null,
+    numReviews: null,
+  });
   useEffect(() => {
     const fetchProduct = async () => {
       const { data } = await axios.get(`/api/products/${match.params.id}`);
       setProduct(data);
     };
     fetchProduct();
-  }, []);
+  }, [match]);
 
   const { name, image, price, countInStock, rating, description, numReviews } =
     product;
