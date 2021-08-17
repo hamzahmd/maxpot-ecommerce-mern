@@ -1,9 +1,33 @@
 import React, { Fragment, useEffect } from 'react';
 import Product from '../Components/Product';
-import { Grid, Typography } from '@material-ui/core';
+import {
+  Grid,
+  Typography,
+  CircularProgress,
+  makeStyles,
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
+
+const useStyles = makeStyles((theme) => ({
+  alertM: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+  headP: {
+    padding: '1.5rem',
+  },
+  loadBox: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+}));
+
 const HomePage = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
@@ -13,13 +37,17 @@ const HomePage = () => {
 
   return (
     <Fragment>
-      <Typography variant='h5' component='h1' style={{ padding: '1.5rem' }}>
+      <Typography variant='h5' component='h1' className={classes.headP}>
         Latest Products
       </Typography>
       {loading ? (
-        <h2>loading...</h2>
+        <div className={classes.loadBox}>
+          <CircularProgress />
+        </div>
       ) : error ? (
-        <h3>{error}</h3>
+        <div className={classes.alertM}>
+          <Alert severity='error'>{error}</Alert>{' '}
+        </div>
       ) : (
         <Grid container spacing={3}>
           {products.map((product) => (
