@@ -15,6 +15,7 @@ import PersonIcon from '@material-ui/icons/Person';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginBottom: theme.spacing(3),
   },
   SportsMmaIcon: {
     marginRight: theme.spacing(1),
@@ -24,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: theme.spacing(1),
+    color: '#f4f4f4',
+    background: '#1B4E59',
   },
   logo: {
     maxWidth: 40,
@@ -52,7 +55,7 @@ const Header = () => {
             component={Link}
             to='/cart'
             variant='contained'
-            style={{ color: '#f4f4f4', background: '#1B4E59' }}
+            color='primary'
             className={classes.button}
             startIcon={<ShoppingCartIcon />}
           >
@@ -62,7 +65,7 @@ const Header = () => {
             component={Link}
             to='/login'
             variant='contained'
-            style={{ color: '#f4f4f4', background: '#1B4E59' }}
+            color='primary'
             className={classes.button}
             startIcon={<PersonIcon />}
           >

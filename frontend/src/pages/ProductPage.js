@@ -29,11 +29,15 @@ const useStyles = makeStyles((theme) => ({
   },
   returnBtn: {
     color: '#1B4E59',
-    margin: '1.5rem',
+    marginBottom: '1.5rem',
+    marginLeft: '1.5rem',
   },
   loadBox: {
     display: 'flex',
     justifyContent: 'center',
+  },
+  gridproductdetails: {
+    alignItems: 'center',
   },
   cardImg: {
     margin: 'auto',
@@ -93,7 +97,12 @@ const ProductPage = ({ match, history }) => {
           <Alert severity='error'>{error}</Alert>
         </div>
       ) : (
-        <Grid container justifyContent='center' spacing={3}>
+        <Grid
+          container
+          justifyContent='center'
+          spacing={3}
+          className={classes.gridproductdetails}
+        >
           <Grid item lg={3} md={3} sm={5} xs={12}>
             <Card>
               <CardMedia

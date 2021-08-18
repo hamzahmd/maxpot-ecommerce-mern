@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../actions/cartActions';
@@ -8,10 +8,19 @@ import {
   CardMedia,
   Typography,
   Card,
-  CardContent,
+  CardActionArea,
   CircularProgress,
-  makeStyles,
+  List,
+  ListItem,
+  FormControl,
+  MenuItem,
+  Select,
+  InputLabel,
+  IconButton,
+  Tooltip,
+  Paper,
 } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Alert from '@material-ui/lab/Alert';
 
 const CartPage = ({ match, history, location }) => {
@@ -26,7 +35,145 @@ const CartPage = ({ match, history, location }) => {
     }
   }, [dispatch, productId, qty]);
 
-  return <div>Hey there!</div>;
+  const removeFromCartHandler = (id) => {
+    console.log('remove');
+  };
+  const checkoutHandler = () => {
+    history.push('/login?redirect=shipping');
+  };
+
+  return (
+    <Fragment>
+      <Grid container>
+        <Grid item md={8}>
+          <Typography
+            variant='h5'
+            component='h1'
+            style={{ paddingLeft: '1rem' }}
+          >
+            Shopping Cart
+          </Typography>
+          {cartItems.length === 0 ? (
+            <div style={{ marginTop: '1rem' }}>
+              <Alert severity='info'>
+                Your cart is empty
+                <Button component={Link} to='/' size='small' color='primary'>
+                  Go back
+                </Button>
+              </Alert>
+            </div>
+          ) : (
+            <List>
+              {cartItems.map((item) => (
+                <ListItem key={item.product}>
+                  <Paper>
+                    <Grid container style={{ alignItems: 'center' }}>
+                      <Grid item md={2}>
+                        <Card>
+                          <CardActionArea
+                            component={Link}
+                            to={`/product/${item.product}`}
+                          >
+                            <CardMedia
+                              // className={classes.img}
+                              component='img'
+                              alt={item.name}
+                              image={item.image}
+                              title={item.name}
+                            />
+                          </CardActionArea>
+                        </Card>
+                      </Grid>
+                      <Grid item md={4}>
+                        <Typography
+                          variant='h6'
+                          style={{ paddingLeft: '1rem' }}
+                        >
+                          {item.name}
+                        </Typography>
+                      </Grid>
+                      <Grid item md={2}>
+                        <Typography
+                          variant='h6'
+                          style={{ paddingLeft: '1rem' }}
+                        >
+                          ${item.price}
+                        </Typography>
+                      </Grid>
+                      <Grid item md={2} style={{ paddingLeft: '1rem' }}>
+                        <FormControl
+                          variant='outlined'
+                          // className={classes.formControl}
+                        >
+                          <InputLabel id='demo-simple-select-outlined-label'>
+                            Qty
+                          </InputLabel>
+                          <Select
+                            labelId='demo-simple-select-outlined-label'
+                            id='demo-simple-select-outlined'
+                            size='small'
+                            label='Qty'
+                            value={item.qty}
+                            onChange={(e) =>
+                              dispatch(
+                                addToCart(item.product, Number(e.target.value))
+                              )
+                            }
+                          >
+                            {[...Array(item.countInStock).keys()].map((x) => (
+                              <MenuItem key={x + 1} value={x + 1}>
+                                {x + 1}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item md={2} style={{ paddingLeft: '1rem' }}>
+                        <Tooltip title='Delete'>
+                          <IconButton
+                            aria-label='delete'
+                            onClick={() => removeFromCartHandler(item.product)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </Grid>
+                    </Grid>
+                  </Paper>
+                </ListItem>
+              ))}
+            </List>
+          )}
+        </Grid>
+        <Grid item md={3}>
+          <Card style={{ padding: '1rem' }}>
+            <Typography variant='h5' component='h2'>
+              Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+              Items
+            </Typography>
+            <Typography
+              variant='h6'
+              style={{ padding: '1rem 0', color: '#1B4E59' }}
+            >
+              $
+              {cartItems
+                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .toFixed(2)}
+            </Typography>
+            <Button
+              variant='contained'
+              fullWidth
+              style={{ color: '#f4f4f4', background: '#1B4E59' }}
+              disabled={cartItems.length === 0}
+              onClick={checkoutHandler}
+            >
+              Proceed To Checkout
+            </Button>
+          </Card>
+        </Grid>
+      </Grid>
+    </Fragment>
+  );
 };
 
 export default CartPage;

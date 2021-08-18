@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   headP: {
-    padding: '1.5rem',
+    paddingBottom: '1.5rem',
+    paddingLeft: '1.5rem',
   },
   loadBox: {
     display: 'flex',
