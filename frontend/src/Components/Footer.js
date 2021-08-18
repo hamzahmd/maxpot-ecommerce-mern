@@ -4,7 +4,9 @@ const Footer = () => {
   return (
     <footer>
       <Box display='flex' justifyContent='center' my='1rem'>
-        <Typography>Copyright &copy; Maxpot Enterprises</Typography>
+        <Typography>
+          Copyright &copy; Maxpot Enterprises {new Date().getFullYear()}
+        </Typography>
       </Box>
     </footer>
   );
