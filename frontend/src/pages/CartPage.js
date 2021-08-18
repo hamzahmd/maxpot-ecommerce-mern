@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../actions/cartActions';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 import {
   Button,
   Grid,
@@ -9,7 +9,6 @@ import {
   Typography,
   Card,
   CardActionArea,
-  CircularProgress,
   List,
   ListItem,
   FormControl,
@@ -36,7 +35,7 @@ const CartPage = ({ match, history, location }) => {
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
-    console.log('remove');
+    dispatch(removeFromCart(id));
   };
   const checkoutHandler = () => {
     history.push('/login?redirect=shipping');
