@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductPage = ({ match, history }) => {
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
   const [open, setOpen] = useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
