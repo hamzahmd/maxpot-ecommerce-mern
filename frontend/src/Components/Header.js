@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../actions/userActions';
 import {
   AppBar,
   Toolbar,
@@ -7,10 +9,13 @@ import {
   Button,
   makeStyles,
   Typography,
+  Menu,
+  MenuItem,
 } from '@material-ui/core';
 
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PersonIcon from '@material-ui/icons/Person';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,8 +37,25 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 40,
   },
 }));
+
 const Header = () => {
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const LogoutHandler = () => {
+    dispatch(logout());
+    setAnchorEl(null);
+  };
+
   return (
     <header className={classes.root}>
       <AppBar position='sticky' style={{ background: '#1B4E59' }}>
@@ -61,16 +83,45 @@ const Header = () => {
           >
             Cart
           </Button>
-          <Button
-            component={Link}
-            to='/login'
-            variant='contained'
-            color='primary'
-            className={classes.button}
-            startIcon={<PersonIcon />}
-          >
-            Login
-          </Button>
+          {userInfo ? (
+            <div>
+              <Button
+                aria-controls='simple-menu'
+                aria-haspopup='true'
+                variant='contained'
+                color='primary'
+                className={classes.button}
+                onClick={handleClick}
+                startIcon={<ExpandMoreIcon />}
+              >
+                {userInfo.name}
+              </Button>
+              <Menu
+                id='username'
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem component={Link} to='/profile' onClick={handleClose}>
+                  Profile
+                </MenuItem>
+
+                <MenuItem onClick={LogoutHandler}>Logout</MenuItem>
+              </Menu>
+            </div>
+          ) : (
+            <Button
+              component={Link}
+              to='/login'
+              variant='contained'
+              color='primary'
+              className={classes.button}
+              startIcon={<PersonIcon />}
+            >
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </header>
