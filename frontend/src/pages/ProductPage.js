@@ -68,8 +68,6 @@ const ProductPage = ({ match, history }) => {
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
-  const { name, image, price, countInStock, rating, description, numReviews } =
-    product;
 
   useEffect(() => {
     dispatch(listProductDetails(match.params.id));
@@ -107,9 +105,9 @@ const ProductPage = ({ match, history }) => {
             <Card>
               <CardMedia
                 component='img'
-                alt={name}
-                image={image}
-                title={name}
+                alt={product.name}
+                image={product.image}
+                title={product.name}
                 className={classes.cardImg}
               />
             </Card>
@@ -121,18 +119,24 @@ const ProductPage = ({ match, history }) => {
                 <Grid container alignItems='center'>
                   <Grid item xs>
                     <Typography gutterBottom variant='h4'>
-                      {name}
+                      {product.name}
                     </Typography>
                   </Grid>
                   <Grid item>
                     <Typography gutterBottom variant='h6'>
-                      ${price}
+                      ${product.price}
                     </Typography>
                     <Typography variant='h6'>
                       <Chip
                         size='small'
-                        color={countInStock === 0 ? 'secondary' : 'primary'}
-                        label={countInStock === 0 ? 'Out of Stock' : 'In Stock'}
+                        color={
+                          product.countInStock === 0 ? 'secondary' : 'primary'
+                        }
+                        label={
+                          product.countInStock === 0
+                            ? 'Out of Stock'
+                            : 'In Stock'
+                        }
                       />
                     </Typography>
                   </Grid>
@@ -145,13 +149,13 @@ const ProductPage = ({ match, history }) => {
                   component='div'
                 >
                   <ProductRating
-                    value={rating}
-                    text={`${numReviews} reviews`}
+                    value={product.rating}
+                    text={`${product.numReviews} reviews`}
                   />
                 </Typography>
 
                 <Typography color='textSecondary' variant='body1'>
-                  {description}
+                  {product.description}
                 </Typography>
 
                 <div className={classes.cartPos}>
@@ -182,7 +186,7 @@ const ProductPage = ({ match, history }) => {
                     </FormControl>
                   )}
                   <div>
-                    {countInStock === 0 ? (
+                    {product.countInStock === 0 ? (
                       <Button variant='contained' disabled>
                         Add to cart
                       </Button>

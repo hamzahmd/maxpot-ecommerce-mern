@@ -12,10 +12,6 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('API is running');
-});
-
 // mounting to routes
 app.use('/api/products', productRoutes);
 
