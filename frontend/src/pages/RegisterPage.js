@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../actions/userActions';
+import { register } from '../actions/userActions';
 
 import {
   Button,
@@ -44,15 +44,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPage = ({ location, history }) => {
+const RegisterPage = ({ location, history }) => {
   const classes = useStyles();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
@@ -63,14 +66,23 @@ const LoginPage = ({ location, history }) => {
   }, [history, userInfo, redirect]);
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    if (password !== confirmPassword) {
+      setMessage('Passwords do not match');
+    } else {
+      dispatch(register(name, email, password));
+    }
   };
   return (
     <Container maxWidth='xs'>
       <Card className={classes.card}>
         <Typography variant='h5' component='h1'>
-          Sign In
+          Register
         </Typography>
+        {message && (
+          <div className={classes.alertM}>
+            <Alert severity='error'>{message}</Alert>
+          </div>
+        )}
         {error && (
           <div className={classes.alertM}>
             <Alert severity='error'>{error}</Alert>
@@ -85,6 +97,21 @@ const LoginPage = ({ location, history }) => {
           <Box pb={2} pt={2}>
             <TextField
               id='outlined-basic-name'
+              type='name'
+              fullWidth
+              label='Name'
+              name='name'
+              size='small'
+              variant='outlined'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </Box>
+
+          <Box pb={2} pt={2}>
+            <TextField
+              id='outlined-basic-email'
               type='email'
               fullWidth
               label='Email'
@@ -112,6 +139,21 @@ const LoginPage = ({ location, history }) => {
             />
           </Box>
 
+          <Box pb={2}>
+            <TextField
+              id='outlined-basic-password2'
+              type='password'
+              fullWidth
+              label='Confirm Password'
+              name='confirmPassword'
+              size='small'
+              variant='outlined'
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </Box>
+
           <Button
             type='submit'
             variant='contained'
@@ -119,16 +161,16 @@ const LoginPage = ({ location, history }) => {
             color='primary'
             className={classes.submitBtn}
           >
-            Sign In
+            Register
           </Button>
 
           <Typography color='initial'>
-            New Customer?
+            Have an Account?
             <Button
               component={Link}
-              to={redirect ? `/register?redirect=${redirect}` : `/register`}
+              to={redirect ? `/login?redirect=${redirect}` : `/login`}
             >
-              Register
+              Login
             </Button>
           </Typography>
         </form>
@@ -137,4 +179,4 @@ const LoginPage = ({ location, history }) => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
