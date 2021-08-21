@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShippingAddress } from '../actions/cartActions';
+import CheckoutSteps from '../Components/CheckoutSteps';
 import {
   Button,
   Card,
@@ -60,6 +61,7 @@ const ShippingPage = ({ history }) => {
   return (
     <Container maxWidth='xs'>
       <Card className={classes.card}>
+        <CheckoutSteps step1 />
         <Typography variant='h5' component='h1'>
           Shipment Details
         </Typography>
