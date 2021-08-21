@@ -62,7 +62,7 @@ const ShippingPage = ({ history }) => {
     <Container maxWidth='xs'>
       <Card className={classes.card}>
         <CheckoutSteps step1 />
-        <Typography variant='h5' component='h1'>
+        <Typography variant='h5' component='h2'>
           Shipment Details
         </Typography>
 

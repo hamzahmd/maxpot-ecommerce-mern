@@ -25,7 +25,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
           <Button disabled>Payment</Button>
         )}
         {step3 ? (
-          <Button component={Link} to='/order' color='inherit'>
+          <Button component={Link} to='/placeorder' color='inherit'>
             Place Order
           </Button>
         ) : (
