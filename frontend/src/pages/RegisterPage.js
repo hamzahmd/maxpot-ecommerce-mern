@@ -109,7 +109,7 @@ const RegisterPage = ({ location, history }) => {
             />
           </Box>
 
-          <Box pb={2} pt={2}>
+          <Box pb={2}>
             <TextField
               id='outlined-basic-email'
               type='email'
