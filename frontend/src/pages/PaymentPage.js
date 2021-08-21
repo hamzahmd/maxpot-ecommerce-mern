@@ -17,7 +17,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -75,11 +75,10 @@ const PaymentPage = ({ history }) => {
             <RadioGroup>
               <FormControlLabel
                 value='PayPal'
-                id='Paypal'
                 control={<Radio />}
-                label='Paypal or Credit Card'
+                label='PayPal'
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                checked
+                checked={paymentMethod === 'PayPal'}
               />
               {/* <FormControlLabel
                 id='Jazzcash'
@@ -87,6 +86,7 @@ const PaymentPage = ({ history }) => {
                 control={<Radio />}
                 label='JazzCash'
                 onChange={(e) => setPaymentMethod(e.target.value)}
+                checked={paymentMethod === 'JazzCash'}
               /> */}
             </RadioGroup>
           </FormControl>

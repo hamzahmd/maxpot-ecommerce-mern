@@ -14,7 +14,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
