@@ -5,12 +5,25 @@ import {
   Typography,
   CircularProgress,
   makeStyles,
+  Paper,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 
 const useStyles = makeStyles((theme) => ({
+  coverImage: {
+    background: `#333 url(/images/header-cover.jpg) no-repeat center center/cover`,
+    marginTop: theme.spacing(-3),
+    marginBottom: theme.spacing(4),
+    color: '#fff',
+    height: '50vh',
+    backdropFilter: 'brightness(120%)',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
   alertM: {
     width: '100%',
     '& > * + *': {
@@ -38,7 +51,13 @@ const HomePage = () => {
 
   return (
     <Fragment>
-      <Typography variant='h5' component='h1' className={classes.headP}>
+      <div className={classes.coverImage}>
+        <Typography variant='h3' component='h1' gutterBottom>
+          Welcome to Maxpot
+        </Typography>
+        <Typography variant='h5'>Attitude towards Innovation</Typography>
+      </div>
+      <Typography variant='h5' component='h2' className={classes.headP}>
         Latest Products
       </Typography>
       {loading ? (

@@ -11,11 +11,15 @@ import {
   Typography,
   Menu,
   MenuItem,
+  Tooltip,
 } from '@material-ui/core';
 
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PersonIcon from '@material-ui/icons/Person';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,13 +32,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  button: {
-    margin: theme.spacing(1),
-    color: '#f4f4f4',
-    background: '#1B4E59',
-  },
+
   logo: {
-    maxWidth: 40,
+    maxWidth: 35,
   },
 }));
 
@@ -63,42 +63,35 @@ const Header = () => {
     <header className={classes.root}>
       <AppBar position='sticky' style={{ background: '#1B4E59' }}>
         <Toolbar>
-          <IconButton
-            component={Link}
-            to='/'
-            edge='start'
-            className={classes.SportsMmaIcon}
-            color='inherit'
-          >
-            <img src='/logo256.png' alt='logo' className={classes.logo} />
-          </IconButton>
-          <Typography variant='h5' className={classes.title}>
+          <Tooltip title='Main Menu'>
+            <IconButton
+              component={Link}
+              to='/'
+              edge='start'
+              className={classes.SportsMmaIcon}
+              color='inherit'
+            >
+              <img src='/logo256.png' alt='logo' className={classes.logo} />
+            </IconButton>
+          </Tooltip>
+
+          <Typography variant='h6' className={classes.title}>
             MAXPOT
           </Typography>
 
-          <Button
-            component={Link}
-            to='/cart'
-            variant='contained'
-            color='primary'
-            className={classes.button}
-            startIcon={<ShoppingCartIcon />}
-          >
-            Cart
-          </Button>
           {userInfo ? (
             <div>
-              <Button
-                aria-controls='simple-menu'
-                aria-haspopup='true'
-                variant='contained'
-                color='primary'
-                className={classes.button}
-                onClick={handleClick}
-                startIcon={<ExpandMoreIcon />}
-              >
-                {userInfo.name}
-              </Button>
+              <Tooltip title='Profile'>
+                <IconButton
+                  aria-controls='simple-menu'
+                  aria-haspopup='true'
+                  variant='contained'
+                  color='inherit'
+                  onClick={handleClick}
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+              </Tooltip>
               <Menu
                 id='username'
                 anchorEl={anchorEl}
@@ -111,22 +104,56 @@ const Header = () => {
                 </MenuItem>
 
                 <MenuItem component={Link} to='/login' onClick={LogoutHandler}>
-                  Logout
+                  Logout {userInfo.name}
                 </MenuItem>
               </Menu>
             </div>
           ) : (
-            <Button
-              component={Link}
-              to='/login'
-              variant='contained'
-              color='primary'
-              className={classes.button}
-              startIcon={<PersonIcon />}
-            >
-              Login
-            </Button>
+            <Tooltip title='Sign In'>
+              <IconButton
+                component={Link}
+                to='/login'
+                variant='contained'
+                color='inherit'
+              >
+                <PersonIcon />
+              </IconButton>
+            </Tooltip>
           )}
+
+          <Tooltip title='Cart'>
+            <IconButton
+              component={Link}
+              to='/cart'
+              variant='contained'
+              color='inherit'
+            >
+              <ShoppingCartIcon />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title='Contact Us'>
+            <IconButton
+              component={Link}
+              to='/contact'
+              variant='contained'
+              color='inherit'
+            >
+              <PermContactCalendarIcon />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title='Repo'>
+            <IconButton
+              href='https://github.com/hamzAhmd/maxpot-ecommerce-mern'
+              target='_blank'
+              rel='noopener noreferrer'
+              variant='contained'
+              color='inherit'
+            >
+              <GitHubIcon />
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
     </header>

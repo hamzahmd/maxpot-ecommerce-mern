@@ -20,6 +20,7 @@ import {
   TableHead,
   Paper,
   TableRow,
+  Hidden,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
@@ -102,8 +103,8 @@ const ProfilePage = ({ location, history }) => {
     }
   };
   return (
-    <Grid container spacing={4}>
-      <Grid item md={4}>
+    <Grid container spacing={2}>
+      <Grid item md={4} sm={5}>
         <Card className={classes.card}>
           <Typography variant='h5' component='h2'>
             User Profile
@@ -201,7 +202,7 @@ const ProfilePage = ({ location, history }) => {
           </form>
         </Card>
       </Grid>
-      <Grid item md={7}>
+      <Grid item md={7} sm={7}>
         <Typography variant='h5' component='h2' gutterBottom>
           My Orders
         </Typography>
@@ -218,8 +219,12 @@ const ProfilePage = ({ location, history }) => {
             <Table className={classes.table} aria-label='simple table'>
               <TableHead>
                 <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>DATE</TableCell>
+                  <Hidden only={['sm', 'xs']}>
+                    <TableCell>ID</TableCell>
+                  </Hidden>
+                  <Hidden only='sm'>
+                    <TableCell>DATE</TableCell>
+                  </Hidden>
                   <TableCell>TOTAL</TableCell>
                   <TableCell>PAID</TableCell>
                   <TableCell>SENT</TableCell>
@@ -229,8 +234,12 @@ const ProfilePage = ({ location, history }) => {
               <TableBody>
                 {orders.map((order) => (
                   <TableRow key={order._id}>
-                    <TableCell>{order._id}</TableCell>
-                    <TableCell>{order.createdAt.substring(0, 10)}</TableCell>
+                    <Hidden only={['sm', 'xs']}>
+                      <TableCell>{order._id}</TableCell>
+                    </Hidden>
+                    <Hidden only='sm'>
+                      <TableCell>{order.createdAt.substring(0, 10)}</TableCell>
+                    </Hidden>
                     <TableCell>{order.totalPrice}</TableCell>
                     <TableCell>
                       {order.isPaid ? <CheckBoxIcon /> : <CancelIcon />}

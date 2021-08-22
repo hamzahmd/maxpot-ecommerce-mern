@@ -13,6 +13,7 @@ import ShippingPage from './pages/ShippingPage';
 import PaymentPage from './pages/PaymentPage';
 import PlaceOrderPage from './pages/PlaceOrderPage';
 import OrderPage from './pages/OrderPage';
+import ContactPage from './pages/ContactPage';
 import { Container } from '@material-ui/core';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Header />
       <main>
         <Container>
+          <Route path='/contact' component={ContactPage} />
           <Route path='/login' component={LoginPage} />
           <Route path='/register' component={RegisterPage} />
           <Route path='/profile' component={ProfilePage} />

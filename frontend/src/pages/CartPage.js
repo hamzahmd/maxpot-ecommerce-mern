@@ -18,6 +18,7 @@ import {
   IconButton,
   Tooltip,
   Paper,
+  Hidden,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Alert from '@material-ui/lab/Alert';
@@ -44,7 +45,7 @@ const CartPage = ({ match, history, location }) => {
   return (
     <Fragment>
       <Grid container>
-        <Grid item md={8}>
+        <Grid item md={6} sm={12} xs={12}>
           <Typography
             variant='h5'
             component='h1'
@@ -67,7 +68,13 @@ const CartPage = ({ match, history, location }) => {
                 <ListItem key={item.product}>
                   <Paper>
                     <Grid container style={{ alignItems: 'center' }}>
-                      <Grid item md={2}>
+                      <Grid
+                        item
+                        md={2}
+                        sm={2}
+                        xs={4}
+                        style={{ paddingRight: '1rem' }}
+                      >
                         <Card>
                           <CardActionArea
                             component={Link}
@@ -83,23 +90,26 @@ const CartPage = ({ match, history, location }) => {
                           </CardActionArea>
                         </Card>
                       </Grid>
-                      <Grid item md={4}>
+                      <Hidden only='xs'>
+                        <Grid item md={4} sm={4}>
+                          <Typography variant='body1'>{item.name}</Typography>
+                        </Grid>
+                      </Hidden>
+                      <Grid item md={2} sm={2} xs={3}>
                         <Typography
-                          variant='h6'
-                          style={{ paddingLeft: '1rem' }}
-                        >
-                          {item.name}
-                        </Typography>
-                      </Grid>
-                      <Grid item md={2}>
-                        <Typography
-                          variant='h6'
-                          style={{ paddingLeft: '1rem' }}
+                          variant='body1'
+                          // style={{ paddingLeft: '1rem' }}
                         >
                           ${item.price}
                         </Typography>
                       </Grid>
-                      <Grid item md={2} style={{ paddingLeft: '1rem' }}>
+                      <Grid
+                        item
+                        md={2}
+                        sm={2}
+                        xs={3}
+                        // style={{ paddingLeft: '1rem' }}
+                      >
                         <FormControl
                           variant='outlined'
                           // className={classes.formControl}
@@ -127,7 +137,13 @@ const CartPage = ({ match, history, location }) => {
                           </Select>
                         </FormControl>
                       </Grid>
-                      <Grid item md={2} style={{ paddingLeft: '1rem' }}>
+                      <Grid
+                        item
+                        md={2}
+                        sm={2}
+                        xs={2}
+                        style={{ paddingRight: '1rem' }}
+                      >
                         <Tooltip title='Delete'>
                           <IconButton
                             aria-label='delete'
@@ -144,8 +160,8 @@ const CartPage = ({ match, history, location }) => {
             </List>
           )}
         </Grid>
-        <Grid item md={3}>
-          <Card style={{ padding: '1rem' }}>
+        <Grid item md={4} sm={12} xs={12}>
+          <Card style={{ padding: '1rem', margin: '3rem 1rem' }}>
             <Typography variant='h5' component='h2'>
               Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
               Items

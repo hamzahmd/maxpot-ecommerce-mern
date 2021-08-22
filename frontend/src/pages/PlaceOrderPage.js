@@ -14,6 +14,7 @@ import {
   ListItem,
   CardActionArea,
   CardMedia,
+  Hidden,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '2rem',
+    padding: '0.9rem',
   },
 }));
 
@@ -76,8 +77,8 @@ const PlaceOrderPage = ({ history }) => {
     <Container>
       <Card className={classes.card}>
         <CheckoutSteps step1 step2 step3 />
-        <Grid container>
-          <Grid item md={7}>
+        <Grid container style={{ padding: '0 0.6rem' }}>
+          <Grid item md={7} sm={7} xs={12}>
             <Typography variant='h6' component='h2' gutterBottom>
               Shipping
             </Typography>
@@ -109,7 +110,7 @@ const PlaceOrderPage = ({ history }) => {
               {cart.cartItems.map((item, index) => (
                 <ListItem key={index}>
                   <Grid container style={{ alignItems: 'center' }}>
-                    <Grid item md={1}>
+                    <Grid item md={1} sm={3} xs={3}>
                       <Card>
                         <CardActionArea
                           component={Link}
@@ -126,7 +127,7 @@ const PlaceOrderPage = ({ history }) => {
                       </Card>
                     </Grid>
 
-                    <Grid item md={4}>
+                    <Grid item md={4} sm={6} xs={7}>
                       <Typography
                         component='p'
                         variant='body1'
@@ -135,10 +136,12 @@ const PlaceOrderPage = ({ history }) => {
                         {item.name}
                       </Typography>
                     </Grid>
-                    <Grid item md={4}>
+                    <Grid item md={4} sm={3} xs={2}>
                       <Typography component='p' variant='body1'>
-                        {item.qty} x ${item.price} = $
-                        {(item.qty * item.price).toFixed(2)}
+                        <Hidden only={['sm', 'xs']}>
+                          {item.qty} x ${item.price} =
+                        </Hidden>{' '}
+                        ${(item.qty * item.price).toFixed(2)}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -146,7 +149,7 @@ const PlaceOrderPage = ({ history }) => {
               ))}
             </List>
           </Grid>
-          <Grid item md={5}>
+          <Grid item md={5} sm={5} xs={12}>
             <Typography variant='h6' component='h2' gutterBottom>
               Order Summary
             </Typography>

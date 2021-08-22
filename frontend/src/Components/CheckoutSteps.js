@@ -11,25 +11,36 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
         aria-label='breadcrumb'
       >
         {step1 ? (
-          <Button component={Link} to='/shipping' color='inherit'>
-            Shipment
+          <Button size='small' component={Link} to='/shipping' color='inherit'>
+            Shipping
           </Button>
         ) : (
-          <Button disabled>Shipment</Button>
+          <Button size='small' disabled>
+            Shipping
+          </Button>
         )}
         {step2 ? (
-          <Button component={Link} to='/payment' color='inherit'>
+          <Button size='small' component={Link} to='/payment' color='inherit'>
             Payment
           </Button>
         ) : (
-          <Button disabled>Payment</Button>
+          <Button size='small' disabled>
+            Payment
+          </Button>
         )}
         {step3 ? (
-          <Button component={Link} to='/placeorder' color='inherit'>
-            Place Order
+          <Button
+            size='small'
+            component={Link}
+            to='/placeorder'
+            color='inherit'
+          >
+            Order
           </Button>
         ) : (
-          <Button disabled>Order</Button>
+          <Button size='small' disabled>
+            Order
+          </Button>
         )}
       </Breadcrumbs>
     </div>

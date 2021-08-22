@@ -16,6 +16,7 @@ import {
   CardMedia,
   CircularProgress,
   Box,
+  Hidden,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '2rem',
+    padding: '1.5rem',
   },
   alertM: {
     width: '100%',
@@ -78,11 +79,11 @@ const OrderPage = ({ match }) => {
           </div>
         ) : (
           <>
-            <Typography variant='h6' component='h1' gutterBottom>
-              Order {order._id}
+            <Typography variant='h6' component='h2' gutterBottom>
+              Order: {order._id}
             </Typography>
             <Grid container>
-              <Grid item md={7}>
+              <Grid item md={7} sm={7} xs={12}>
                 <Typography variant='h6' component='h2' gutterBottom>
                   Shipping
                 </Typography>
@@ -148,7 +149,7 @@ const OrderPage = ({ match }) => {
                   {order.orderItems.map((item, index) => (
                     <ListItem key={index}>
                       <Grid container style={{ alignItems: 'center' }}>
-                        <Grid item md={1}>
+                        <Grid item md={1} sm={3} xs={3}>
                           <Card>
                             <CardActionArea
                               component={Link}
@@ -165,7 +166,7 @@ const OrderPage = ({ match }) => {
                           </Card>
                         </Grid>
 
-                        <Grid item md={4}>
+                        <Grid md={4} sm={6} xs={7}>
                           <Typography
                             component='p'
                             variant='body1'
@@ -174,10 +175,12 @@ const OrderPage = ({ match }) => {
                             {item.name}
                           </Typography>
                         </Grid>
-                        <Grid item md={4}>
+                        <Grid item md={4} sm={3} xs={2}>
                           <Typography component='p' variant='body1'>
-                            {item.qty} x ${item.price} = $
-                            {(item.qty * item.price).toFixed(2)}
+                            <Hidden only={['sm', 'xs']}>
+                              {item.qty} x ${item.price} =
+                            </Hidden>{' '}
+                            ${(item.qty * item.price).toFixed(2)}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -185,7 +188,7 @@ const OrderPage = ({ match }) => {
                   ))}
                 </List>
               </Grid>
-              <Grid item md={5}>
+              <Grid item md={5} sm={5} xs={12}>
                 <Box pl={2}>
                   <Typography variant='h6' component='h2' gutterBottom>
                     Order Summary
@@ -210,7 +213,7 @@ const OrderPage = ({ match }) => {
                   </Typography>
                   <Button
                     component={Link}
-                    to='/'
+                    to='/contact'
                     style={{ color: '#f4f4f4', background: '#1B4E59' }}
                     variant='contained'
                   >
