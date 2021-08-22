@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import { USER_UPDATE_PROFILE_RESET } from '../reducers/types';
+import { listMyOrders } from '../actions/orderActions';
 import {
   Button,
   Card,
@@ -11,8 +13,17 @@ import {
   makeStyles,
   Typography,
   Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  Paper,
+  TableRow,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -27,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginTop: theme.spacing(2),
     },
+  },
+  table: {
+    minWidth: 650,
   },
   loadBox: {
     display: 'flex',
@@ -62,6 +76,9 @@ const ProfilePage = ({ location, history }) => {
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile;
 
+  const orderListMy = useSelector((state) => state.orderListMy);
+  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
+
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
@@ -69,6 +86,7 @@ const ProfilePage = ({ location, history }) => {
       if (!user || !user.name || success) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails('profile'));
+        dispatch(listMyOrders());
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -84,8 +102,8 @@ const ProfilePage = ({ location, history }) => {
     }
   };
   return (
-    <Grid container>
-      <Grid item md={3}>
+    <Grid container spacing={4}>
+      <Grid item md={4}>
         <Card className={classes.card}>
           <Typography variant='h5' component='h2'>
             User Profile
@@ -183,8 +201,58 @@ const ProfilePage = ({ location, history }) => {
           </form>
         </Card>
       </Grid>
-      <Grid item md={9}>
-        <h2>Orders</h2>
+      <Grid item md={7}>
+        <Typography variant='h5' component='h2' gutterBottom>
+          My Orders
+        </Typography>
+        {loadingOrders ? (
+          <div className={classes.loadBox}>
+            <CircularProgress />
+          </div>
+        ) : errorOrders ? (
+          <div className={classes.alertM}>
+            <Alert severity='error'>{errorOrders}</Alert>
+          </div>
+        ) : (
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label='simple table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell>DATE</TableCell>
+                  <TableCell>TOTAL</TableCell>
+                  <TableCell>PAID</TableCell>
+                  <TableCell>SENT</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {orders.map((order) => (
+                  <TableRow key={order._id}>
+                    <TableCell>{order._id}</TableCell>
+                    <TableCell>{order.createdAt.substring(0, 10)}</TableCell>
+                    <TableCell>{order.totalPrice}</TableCell>
+                    <TableCell>
+                      {order.isPaid ? <CheckBoxIcon /> : <CancelIcon />}
+                    </TableCell>
+                    <TableCell>
+                      {order.isDelieverd ? <CheckBoxIcon /> : <CancelIcon />}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        size='small'
+                        component={Link}
+                        to={`/order/${order._id}`}
+                      >
+                        Details
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
       </Grid>
     </Grid>
   );

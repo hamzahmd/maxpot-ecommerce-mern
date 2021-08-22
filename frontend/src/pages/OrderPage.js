@@ -15,6 +15,7 @@ import {
   CardActionArea,
   CardMedia,
   CircularProgress,
+  Box,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 const useStyles = makeStyles((theme) => ({
@@ -185,36 +186,37 @@ const OrderPage = ({ match }) => {
                 </List>
               </Grid>
               <Grid item md={5}>
-                <Typography variant='h6' component='h2' gutterBottom>
-                  Order Summary
-                </Typography>
-                <Typography component='span'>
-                  <Grid container style={{ alignItems: 'center' }}>
-                    <Grid item md={3}>
-                      <List>
-                        <ListItem>Items</ListItem>
-                        <ListItem>Shipping</ListItem>
-                        <ListItem>Tax</ListItem>
-                        <ListItem>Total</ListItem>
-                      </List>
+                <Box pl={2}>
+                  <Typography variant='h6' component='h2' gutterBottom>
+                    Order Summary
+                  </Typography>
+                  <Typography component='span'>
+                    <Grid container style={{ alignItems: 'center' }}>
+                      <Grid item md={3}>
+                        <List>
+                          <ListItem>Items</ListItem>
+                          <ListItem>Shipping</ListItem>
+                          <ListItem>Tax</ListItem>
+                          <ListItem>Total</ListItem>
+                        </List>
+                      </Grid>
+                      <Grid item md={2}>
+                        <ListItem>${order.itemsPrice}</ListItem>
+                        <ListItem>${order.shippingPrice}</ListItem>
+                        <ListItem>${order.taxPrice}</ListItem>
+                        <ListItem>${order.totalPrice}</ListItem>
+                      </Grid>
                     </Grid>
-                    <Grid item md={2}>
-                      <ListItem>${order.itemsPrice}</ListItem>
-                      <ListItem>${order.shippingPrice}</ListItem>
-                      <ListItem>${order.taxPrice}</ListItem>
-                      <ListItem>${order.totalPrice}</ListItem>
-                    </Grid>
-                  </Grid>
-                </Typography>
-
-                {/* 
-            <Button
-              style={{ color: '#f4f4f4', background: '#1B4E59' }}
-              onClick={placeOrderHandler}
-              variant='contained'
-            >
-              Place Order
-            </Button> */}
+                  </Typography>
+                  <Button
+                    component={Link}
+                    to='/'
+                    style={{ color: '#f4f4f4', background: '#1B4E59' }}
+                    variant='contained'
+                  >
+                    Contact Us
+                  </Button>
+                </Box>
               </Grid>
             </Grid>
           </>

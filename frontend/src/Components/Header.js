@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../actions/userActions';
 import {
@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -52,7 +53,9 @@ const Header = () => {
     setAnchorEl(null);
   };
   const LogoutHandler = () => {
+    history.push(`/login`);
     dispatch(logout());
+
     setAnchorEl(null);
   };
 
@@ -107,7 +110,9 @@ const Header = () => {
                   Profile
                 </MenuItem>
 
-                <MenuItem onClick={LogoutHandler}>Logout</MenuItem>
+                <MenuItem component={Link} to='/login' onClick={LogoutHandler}>
+                  Logout
+                </MenuItem>
               </Menu>
             </div>
           ) : (

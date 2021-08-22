@@ -53,7 +53,7 @@ const PaymentPage = ({ history }) => {
     history.push('/shipping');
   }
 
-  const [paymentMethod, setPaymentMethod] = useState('PayPal');
+  const [paymentMethod, setPaymentMethod] = useState('cash');
 
   const dispatch = useDispatch();
   const submitHandler = (e) => {
@@ -74,11 +74,11 @@ const PaymentPage = ({ history }) => {
             <FormLabel component='legend'>Select Method</FormLabel>
             <RadioGroup>
               <FormControlLabel
-                value='PayPal'
+                value='cash'
                 control={<Radio />}
-                label='PayPal'
+                label='Cash on Delivery'
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                checked={paymentMethod === 'PayPal'}
+                checked={paymentMethod === 'cash'}
               />
               {/* <FormControlLabel
                 id='Jazzcash'
