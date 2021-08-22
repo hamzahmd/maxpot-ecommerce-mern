@@ -3,6 +3,9 @@ import {
   ORDER_CREATE_FAIL,
   ORDER_CREATE_SUCCESS,
   ORDER_CREATE_REQUEST,
+  ORDER_DETAILS_FAIL,
+  ORDER_DETAILS_SUCCESS,
+  ORDER_DETAILS_REQUEST,
 } from '../reducers/types';
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -26,6 +29,32 @@ export const createOrder = (order) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getOrderDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_DETAILS_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/orders${id}`, config);
+    dispatch({
+      type: ORDER_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_DETAILS_FAIL,
       payload: error.response.data.message,
     });
   }
