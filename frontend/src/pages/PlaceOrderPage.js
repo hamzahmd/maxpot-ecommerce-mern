@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckoutSteps from '../Components/CheckoutSteps';
+import { createOrder } from '../actions/orderActions';
 import {
   Button,
   Card,
@@ -14,7 +15,7 @@ import {
   CardActionArea,
   CardMedia,
 } from '@material-ui/core';
-
+import Alert from '@material-ui/lab/Alert';
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: theme.spacing(2),
@@ -25,8 +26,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PlaceOrderPage = () => {
+const PlaceOrderPage = ({ history }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
 
   const addDecimals = (num) => {
@@ -47,9 +49,28 @@ const PlaceOrderPage = () => {
     Number(cart.taxPrice)
   ).toFixed(2);
 
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
+
+  useEffect(() => {
+    if (success) {
+      history.push(`/order/${order._id}`);
+    }
+    // eslint-disable-next-line
+  }, [history, success]);
+
   const placeOrderHandler = (e) => {
-    e.preventDefault();
-    //
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
   return (
     <Container>
@@ -147,10 +168,15 @@ const PlaceOrderPage = () => {
                 </Grid>
               </Grid>
             </Typography>
+            {error && (
+              <div style={{ marginTop: '0.5rem' }}>
+                <Alert severity='danger'></Alert>
+              </div>
+            )}
 
             <Button
               style={{ color: '#f4f4f4', background: '#1B4E59' }}
-              Click={placeOrderHandler}
+              onClick={placeOrderHandler}
               variant='contained'
             >
               Place Order
