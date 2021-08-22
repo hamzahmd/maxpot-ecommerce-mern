@@ -7,7 +7,7 @@ const orderSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
-    OrderItems: [
+    orderItems: [
       {
         name: { type: String, required: true },
         qty: { type: Number, required: true },
@@ -26,7 +26,10 @@ const orderSchema = mongoose.Schema(
       postalCode: { type: String, required: true },
       country: { type: String, required: true },
     },
-    // Coming from the paypal
+    paymentMethod: {
+      type: String,
+      required: true,
+    },
     paymentResult: {
       id: { type: String },
       status: { type: String },

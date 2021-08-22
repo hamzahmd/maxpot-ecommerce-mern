@@ -96,7 +96,7 @@ const PlaceOrderPage = ({ history }) => {
               Payment Method
             </Typography>
             <Typography component='p' variant='body1'>
-              <strong>Method:</strong> {cart.paymentMethod.paymentMethod}
+              <strong>Method:</strong> {cart.paymentMethod}
             </Typography>
             <Typography
               variant='h6'
@@ -150,7 +150,7 @@ const PlaceOrderPage = ({ history }) => {
             <Typography variant='h6' component='h2' gutterBottom>
               Order Summary
             </Typography>
-            <Typography>
+            <Typography component='span'>
               <Grid container style={{ alignItems: 'center' }}>
                 <Grid item md={3}>
                   <List>
@@ -170,7 +170,7 @@ const PlaceOrderPage = ({ history }) => {
             </Typography>
             {error && (
               <div style={{ marginTop: '0.5rem' }}>
-                <Alert severity='danger'></Alert>
+                <Alert severity='error'>{error}</Alert>
               </div>
             )}
 
