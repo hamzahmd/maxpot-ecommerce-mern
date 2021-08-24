@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { listUsers } from '../actions/userActions';
+import { listUsers, deleteUser } from '../actions/userActions';
 import {
   CircularProgress,
   Table,
@@ -34,16 +34,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserListPage = () => {
+const UserListPage = ({ history }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
-  useEffect(() => {
-    dispatch(listUsers());
-  }, [dispatch]);
 
-  const deleteHandler = (id) => {};
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const userDelete = useSelector((state) => state.userDelete);
+  const { success: successDelete } = userDelete;
+
+  useEffect(() => {
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(listUsers());
+    } else {
+      history.push('/login');
+    }
+    dispatch(listUsers());
+  }, [dispatch, history, successDelete, userInfo]);
+
+  const deleteHandler = (id) => {
+    if (window.confirm('Are Your Sure?')) {
+      dispatch(deleteUser(id));
+    }
+  };
 
   return (
     <>
@@ -60,7 +77,7 @@ const UserListPage = () => {
           <Alert severity='error'>{error}</Alert>
         </div>
       ) : (
-        <TableContainer component={Paper} maxWidth='sm'>
+        <TableContainer component={Paper}>
           <Table aria-label='simple table'>
             <TableHead>
               <TableRow>
@@ -90,8 +107,6 @@ const UserListPage = () => {
                     </IconButton>
                     <IconButton
                       size='small'
-                      component={Link}
-                      to={`/user/${user._id}/edit`}
                       onClick={() => {
                         deleteHandler(user._id);
                       }}

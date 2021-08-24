@@ -6,7 +6,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Button,
   makeStyles,
   Typography,
   Menu,
@@ -19,7 +18,6 @@ import PersonIcon from '@material-ui/icons/Person';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
-import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
