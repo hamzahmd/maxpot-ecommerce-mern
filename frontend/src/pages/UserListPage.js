@@ -101,7 +101,7 @@ const UserListPage = ({ history }) => {
                     <IconButton
                       size='small'
                       component={Link}
-                      to={`/user/${user._id}/edit`}
+                      to={`/admin/user/${user._id}/edit`}
                     >
                       <EditIcon />
                     </IconButton>
