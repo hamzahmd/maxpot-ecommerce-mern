@@ -79,7 +79,61 @@ const Header = () => {
             MAXPOT
           </Typography>
 
-          {userInfo ? (
+          {userInfo && userInfo.isAdmin ? (
+            userInfo &&
+            userInfo.isAdmin && (
+              <div>
+                <Tooltip title='Admin'>
+                  <IconButton
+                    aria-controls='simple-menu'
+                    aria-haspopup='true'
+                    variant='contained'
+                    color='inherit'
+                    onClick={handleClick}
+                  >
+                    <ExpandMoreIcon />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  id='username'
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem
+                    component={Link}
+                    to='/admin/userlist'
+                    onClick={handleClose}
+                  >
+                    Users
+                  </MenuItem>
+                  <MenuItem
+                    component={Link}
+                    to='/admin/productlist'
+                    onClick={handleClose}
+                  >
+                    Products
+                  </MenuItem>
+                  <MenuItem
+                    component={Link}
+                    to='/admin/orderlist'
+                    onClick={handleClose}
+                  >
+                    Orders
+                  </MenuItem>
+
+                  <MenuItem
+                    component={Link}
+                    to='/login'
+                    onClick={LogoutHandler}
+                  >
+                    Logout
+                  </MenuItem>
+                </Menu>
+              </div>
+            )
+          ) : userInfo ? (
             <div>
               <Tooltip title='Profile'>
                 <IconButton
@@ -120,6 +174,9 @@ const Header = () => {
               </IconButton>
             </Tooltip>
           )}
+
+          {/* {}
+          {} */}
 
           <Tooltip title='Cart'>
             <IconButton

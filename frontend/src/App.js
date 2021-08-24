@@ -14,6 +14,7 @@ import PaymentPage from './pages/PaymentPage';
 import PlaceOrderPage from './pages/PlaceOrderPage';
 import OrderPage from './pages/OrderPage';
 import ContactPage from './pages/ContactPage';
+import UserListPage from './pages/UserListPage';
 import { Container } from '@material-ui/core';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path='/register' component={RegisterPage} />
           <Route path='/profile' component={ProfilePage} />
           <Route path='/shipping' component={ShippingPage} />
+          <Route path='/admin/userlist' component={UserListPage} />
           <Route path='/payment' component={PaymentPage} />
           <Route path='/placeorder' component={PlaceOrderPage} />
           <Route path='/order/:id' component={OrderPage} />

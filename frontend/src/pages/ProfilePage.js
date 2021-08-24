@@ -40,9 +40,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
-  table: {
-    minWidth: 650,
-  },
+
   loadBox: {
     display: 'flex',
     justifyContent: 'center',
@@ -216,7 +214,7 @@ const ProfilePage = ({ location, history }) => {
           </div>
         ) : (
           <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label='simple table'>
+            <Table aria-label='simple table'>
               <TableHead>
                 <TableRow>
                   <Hidden only={['sm', 'xs']}>
