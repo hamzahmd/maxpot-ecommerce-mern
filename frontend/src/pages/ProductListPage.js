@@ -87,7 +87,12 @@ const ProductListPage = ({ history, match }) => {
             Products
           </Typography>
         </Grid>
-        <Grid item md={6} xs={6}>
+        <Grid
+          item
+          md={6}
+          xs={6}
+          style={{ display: 'flex', flexDirection: 'row-reverse' }}
+        >
           <Button
             onClick={createProductHandler}
             variant='contained'

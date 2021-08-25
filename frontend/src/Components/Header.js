@@ -120,7 +120,13 @@ const Header = () => {
                   >
                     Orders
                   </MenuItem>
-
+                  <MenuItem
+                    component={Link}
+                    to='/profile'
+                    onClick={handleClose}
+                  >
+                    Profile
+                  </MenuItem>
                   <MenuItem
                     component={Link}
                     to='/login'
