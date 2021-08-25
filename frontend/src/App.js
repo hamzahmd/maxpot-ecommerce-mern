@@ -16,6 +16,7 @@ import OrderPage from './pages/OrderPage';
 import ContactPage from './pages/ContactPage';
 import UserListPage from './pages/UserListPage';
 import ProductListPage from './pages/ProductListPage';
+import OrderListPage from './pages/OrderListPage';
 import ProductEditPage from './pages/ProductEditPage';
 import UserEditPage from './pages/UserEditPage';
 import { Container } from '@material-ui/core';
@@ -33,6 +34,7 @@ function App() {
           <Route path='/shipping' component={ShippingPage} />
           <Route path='/admin/userlist' component={UserListPage} />
           <Route path='/admin/productlist' component={ProductListPage} />
+          <Route path='/admin/orderlist' component={OrderListPage} />
           <Route path='/admin/user/:id/edit' component={UserEditPage} />
           <Route path='/admin/product/:id/edit' component={ProductEditPage} />
           <Route path='/payment' component={PaymentPage} />

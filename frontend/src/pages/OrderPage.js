@@ -211,14 +211,6 @@ const OrderPage = ({ match }) => {
                       </Grid>
                     </Grid>
                   </Typography>
-                  <Button
-                    component={Link}
-                    to='/contact'
-                    style={{ color: '#f4f4f4', background: '#1B4E59' }}
-                    variant='contained'
-                  >
-                    Contact Us
-                  </Button>
                 </Box>
               </Grid>
             </Grid>
