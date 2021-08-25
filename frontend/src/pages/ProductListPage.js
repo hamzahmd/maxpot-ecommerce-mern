@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { listUsers, deleteUser } from '../actions/userActions';
+import { listProducts } from '../actions/productActions';
 import {
   CircularProgress,
   Table,
@@ -14,8 +14,11 @@ import {
   IconButton,
   TableRow,
   Typography,
+  Grid,
+  Button,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CancelIcon from '@material-ui/icons/Cancel';
 import EditIcon from '@material-ui/icons/Edit';
@@ -32,44 +35,61 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
+  headStyle: {
+    marginBottom: '1rem',
+    justifyContent: 'space-between',
+  },
   funcBtn: {
     display: 'flex',
     justifyContent: 'space-between',
   },
 }));
 
-const UserListPage = ({ history }) => {
+const ProductListPage = ({ history, match }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const userList = useSelector((state) => state.userList);
-  const { loading, error, users } = userList;
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const userDelete = useSelector((state) => state.userDelete);
-  const { success: successDelete } = userDelete;
-
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
-      dispatch(listUsers());
+      dispatch(listProducts());
     } else {
       history.push('/login');
     }
-  }, [dispatch, history, successDelete, userInfo]);
+  }, [dispatch, history, userInfo]);
 
   const deleteHandler = (id) => {
     if (window.confirm('Are Your Sure?')) {
-      dispatch(deleteUser(id));
+      //
     }
   };
 
+  const createProductHandler = (product) => {
+    //
+  };
   return (
     <>
-      <Typography variant='h5' component='h2' gutterBottom>
-        Users
-      </Typography>
+      <Grid container className={classes.headStyle}>
+        <Grid item>
+          <Typography variant='h5' component='h2' gutterBottom>
+            Products
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button
+            onClick={createProductHandler}
+            variant='contained'
+            startIcon={<AddCircleIcon />}
+          >
+            Add new Product
+          </Button>
+        </Grid>
+      </Grid>
 
       {loading ? (
         <div className={classes.loadBox}>
@@ -86,32 +106,32 @@ const UserListPage = ({ history }) => {
               <TableRow>
                 <TableCell>ID</TableCell>
                 <TableCell>NAME</TableCell>
-                <TableCell>EMAIL</TableCell>
-                <TableCell>ADMIN</TableCell>
+                <TableCell>PRICE</TableCell>
+                <TableCell>CATEGORY</TableCell>
+                <TableCell>BRAND</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.map((user) => (
-                <TableRow key={user._id}>
-                  <TableCell>{user._id}</TableCell>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    {user.isAdmin ? <CheckBoxIcon /> : <CancelIcon />}
-                  </TableCell>
+              {products.map((product) => (
+                <TableRow key={product._id}>
+                  <TableCell>{product._id}</TableCell>
+                  <TableCell>{product.name}</TableCell>
+                  <TableCell>${product.price}</TableCell>
+                  <TableCell>{product.category}</TableCell>
+                  <TableCell>{product.brand}</TableCell>
                   <TableCell className={classes.funcBtn}>
                     <IconButton
                       size='small'
                       component={Link}
-                      to={`/admin/user/${user._id}/edit`}
+                      to={`/admin/product/${product._id}/edit`}
                     >
                       <EditIcon />
                     </IconButton>
                     <IconButton
                       size='small'
                       onClick={() => {
-                        deleteHandler(user._id);
+                        deleteHandler(product._id);
                       }}
                     >
                       <DeleteIcon />
@@ -127,4 +147,4 @@ const UserListPage = ({ history }) => {
   );
 };
 
-export default UserListPage;
+export default ProductListPage;
