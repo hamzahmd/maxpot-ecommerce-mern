@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { listProducts, deleteProduct } from '../actions/productActions';
+import {
+  listProducts,
+  deleteProduct,
+  createProduct,
+} from '../actions/productActions';
+import { PRODUCT_CREATE_RESET } from '../reducers/types';
 import {
   CircularProgress,
   Table,
@@ -19,8 +24,7 @@ import {
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import CancelIcon from '@material-ui/icons/Cancel';
+
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -59,16 +63,36 @@ const ProductListPage = ({ history, match }) => {
     success: successDelete,
   } = productDelete;
 
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts());
-    } else {
-      history.push('/login');
+    dispatch({ type: PRODUCT_CREATE_RESET });
+
+    if (!userInfo.isAdmin) {
+      history.push(`/login`);
     }
-  }, [dispatch, history, userInfo, successDelete]);
+    if (successCreate) {
+      history.push(`admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProducts());
+    }
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ]);
 
   const deleteHandler = (id) => {
     if (window.confirm('Are Your Sure?')) {
@@ -76,8 +100,8 @@ const ProductListPage = ({ history, match }) => {
     }
   };
 
-  const createProductHandler = (product) => {
-    //
+  const createProductHandler = () => {
+    dispatch(createProduct());
   };
   return (
     <>
@@ -112,6 +136,18 @@ const ProductListPage = ({ history, match }) => {
           <Alert severity='error'>{errorDelete}</Alert>
         </div>
       )}
+
+      {loadingCreate && (
+        <div className={classes.loadBox}>
+          <CircularProgress />
+        </div>
+      )}
+      {errorCreate && (
+        <div className={classes.alertM}>
+          <Alert severity='error'>{errorCreate}</Alert>
+        </div>
+      )}
+
       {loading ? (
         <div className={classes.loadBox}>
           <CircularProgress />
