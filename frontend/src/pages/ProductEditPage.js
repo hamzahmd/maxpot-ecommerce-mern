@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { listProductDetails } from '../actions/productActions';
+import { listProductDetails, updateProduct } from '../actions/productActions';
 
 import {
   Button,
@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 
 import Alert from '@material-ui/lab/Alert';
+import { PRODUCT_UPDATE_RESET } from '../reducers/types';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -66,25 +67,46 @@ const ProductEditPage = ({ match, history }) => {
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
-  const userUpdate = useSelector((state) => state.userUpdate);
+  const productUpdate = useSelector((state) => state.productUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = productUpdate;
 
   useEffect(() => {
-    if (!product.name || product._id !== productId) {
-      dispatch(listProductDetails(productId));
+    if (successUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_RESET });
+      history.push(`/admin/productlist`);
     } else {
-      setName(product.name);
-      setPrice(product.price);
-      setImage(product.image);
-      setDescription(product.description);
-      setBrand(product.brand);
-      setCategory(product.category);
-      setCountInStock(product.countInStock);
+      if (!product.name || product._id !== productId) {
+        dispatch(listProductDetails(productId));
+      } else {
+        setName(product.name);
+        setPrice(product.price);
+        setImage(product.image);
+        setDescription(product.description);
+        setBrand(product.brand);
+        setCategory(product.category);
+        setCountInStock(product.countInStock);
+      }
     }
-  }, [product, productId, dispatch, history]);
+  }, [product, productId, dispatch, history, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    //
+    dispatch(
+      updateProduct({
+        _id: productId,
+        price,
+        name,
+        description,
+        countInStock,
+        brand,
+        category,
+        image,
+      })
+    );
   };
   return (
     <>
@@ -101,7 +123,7 @@ const ProductEditPage = ({ match, history }) => {
           <Typography variant='h5' component='h1'>
             Edit Product
           </Typography>
-          {/* {loadingUpdate && (
+          {loadingUpdate && (
             <div className={classes.loadBox}>
               <CircularProgress />
             </div>
@@ -110,7 +132,7 @@ const ProductEditPage = ({ match, history }) => {
             <div className={classes.alertM}>
               <Alert severity='error'>{errorUpdate}</Alert>
             </div>
-          )} */}
+          )}
           {loading ? (
             <div className={classes.loadBox}>
               <CircularProgress />
