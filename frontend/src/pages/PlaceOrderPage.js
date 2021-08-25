@@ -17,6 +17,7 @@ import {
   Hidden,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import { ORDER_CREATE_RESET, USER_DETAILS_RESET } from '../reducers/types';
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: theme.spacing(2),
@@ -56,6 +57,8 @@ const PlaceOrderPage = ({ history }) => {
   useEffect(() => {
     if (success) {
       history.push(`/order/${order._id}`);
+      dispatch({ type: USER_DETAILS_RESET });
+      dispatch({ type: ORDER_CREATE_RESET });
     }
     // eslint-disable-next-line
   }, [history, success]);

@@ -224,8 +224,8 @@ const ProfilePage = ({ location, history }) => {
                     <TableCell>DATE</TableCell>
                   </Hidden>
                   <TableCell>TOTAL</TableCell>
-                  <TableCell>PAID</TableCell>
-                  <TableCell>SENT</TableCell>
+
+                  <TableCell>Received</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
@@ -239,9 +239,7 @@ const ProfilePage = ({ location, history }) => {
                       <TableCell>{order.createdAt.substring(0, 10)}</TableCell>
                     </Hidden>
                     <TableCell>{order.totalPrice}</TableCell>
-                    <TableCell>
-                      {order.isPaid ? <CheckBoxIcon /> : <CancelIcon />}
-                    </TableCell>
+
                     <TableCell>
                       {order.isDelieverd ? <CheckBoxIcon /> : <CancelIcon />}
                     </TableCell>

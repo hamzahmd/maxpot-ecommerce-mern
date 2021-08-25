@@ -24,6 +24,7 @@ import {
   orderPayReducer,
   orderListMyReducer,
   orderListReducer,
+  orderDeliverReducer,
 } from './reducers/orderReducers';
 
 const reducer = combineReducers({
@@ -45,6 +46,7 @@ const reducer = combineReducers({
   orderPay: orderPayReducer,
   orderListMy: orderListMyReducer,
   orderList: orderListReducer,
+  orderDeliver: orderDeliverReducer,
 });
 
 const cartItemsLocalStorage = localStorage.getItem('cartItems')
@@ -59,15 +61,10 @@ const shippingAddressStorage = localStorage.getItem('shippingAddress')
   ? JSON.parse(localStorage.getItem('shippingAddress'))
   : {};
 
-const paymentMethodStorage = localStorage.getItem('paymentMethod')
-  ? JSON.parse(localStorage.getItem('paymentMethod'))
-  : {};
-
 const initialState = {
   cart: {
     cartItems: cartItemsLocalStorage,
     shippingAddress: shippingAddressStorage,
-    paymentMethod: paymentMethodStorage,
   },
   userLogin: { userInfo: userInfoLocalStorage },
 };

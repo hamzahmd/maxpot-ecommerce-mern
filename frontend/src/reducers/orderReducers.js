@@ -15,6 +15,11 @@ import {
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
   ORDER_LIST_FAIL,
+  ORDER_DELIVERD_REQUEST,
+  ORDER_DELIVERD_SUCCESS,
+  ORDER_DELIVERD_FAIL,
+  ORDER_DELIVERD_RESET,
+  ORDER_CREATE_RESET,
 } from './types';
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -34,6 +39,8 @@ export const orderCreateReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+    case ORDER_CREATE_RESET:
+      return {};
     default:
       return state;
   }
@@ -125,6 +132,29 @@ export const orderListReducer = (state = { order: [] }, action) => {
         loading: false,
         error: action.payload,
       };
+    default:
+      return state;
+  }
+};
+
+export const orderDeliverReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_DELIVERD_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_DELIVERD_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case ORDER_DELIVERD_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case ORDER_DELIVERD_RESET:
+      return {};
     default:
       return state;
   }

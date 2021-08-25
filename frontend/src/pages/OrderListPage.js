@@ -78,7 +78,7 @@ const OrderListPage = ({ history }) => {
                 <TableCell>USER</TableCell>
                 <TableCell>DATE</TableCell>
                 <TableCell>TOTAL</TableCell>
-                <TableCell>PAID</TableCell>
+
                 <TableCell>DELIVERED</TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -91,9 +91,7 @@ const OrderListPage = ({ history }) => {
                     <TableCell>{order.user && order.user.name}</TableCell>
                     <TableCell>{order.createdAt.substring(0, 10)}</TableCell>
                     <TableCell>${order.totalPrice}</TableCell>
-                    <TableCell>
-                      {order.isPaid ? <CheckBoxIcon /> : <CancelIcon />}
-                    </TableCell>
+
                     <TableCell>
                       {order.isDelieverd ? <CheckBoxIcon /> : <CancelIcon />}
                     </TableCell>

@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { getOrderDetails } from '../actions/orderActions';
+import { ORDER_DELIVERD_RESET, ORDER_PAY_RESET } from '../reducers/types';
+import {
+  getOrderDetails,
+  deliverOrder,
+  payOrder,
+} from '../actions/orderActions';
 import {
   Button,
   Card,
@@ -39,13 +43,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OrderPage = ({ match }) => {
+const OrderPage = ({ match, history }) => {
   const orderId = match.params.id;
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
+
+  const orderPay = useSelector((state) => state.orderPay);
+  const { success: successPay, loading: loadingPay } = orderPay;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { success: successDeliver, loading: loadingDeliver } = orderDeliver;
 
   if (!loading) {
     const addDecimals = (num) => {
@@ -61,10 +74,20 @@ const OrderPage = ({ match }) => {
   }
 
   useEffect(() => {
-    if (!order || order._id !== orderId) {
+    if (!userInfo) {
+      history.push('/login');
+    }
+    if (!order || successDeliver || successPay) {
+      dispatch({ type: ORDER_DELIVERD_RESET });
+      dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
     }
-  }, [order, orderId, dispatch]);
+  }, [order, orderId, dispatch, successDeliver, successPay, history, userInfo]);
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order));
+    dispatch(payOrder(order));
+  };
 
   return (
     <Container>
@@ -129,9 +152,11 @@ const OrderPage = ({ match }) => {
                 <Typography component='p' variant='body1'>
                   <strong>Method:</strong> {order.paymentMethod}
                 </Typography>
-                {order.isPaid ? (
+                {order.isDelieverd ? (
                   <div className={classes.alertM}>
-                    <Alert severity='success'>Paid on {order.paidAt}</Alert>
+                    <Alert severity='success'>
+                      Paid on {order.delieverdAt}
+                    </Alert>
                   </div>
                 ) : (
                   <div className={classes.alertM}>
@@ -210,6 +235,16 @@ const OrderPage = ({ match }) => {
                         <ListItem>${order.totalPrice}</ListItem>
                       </Grid>
                     </Grid>
+                    {loadingDeliver && loadingPay && (
+                      <div className={classes.loadBox}>
+                        <CircularProgress />
+                      </div>
+                    )}
+                    {userInfo && userInfo.isAdmin && !order.isDelieverd && (
+                      <Button onClick={deliverHandler} variant='contained'>
+                        Mark As Deliverd and Paid
+                      </Button>
+                    )}
                   </Typography>
                 </Box>
               </Grid>
