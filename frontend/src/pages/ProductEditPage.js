@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProductDetails, updateProduct } from '../actions/productActions';
@@ -12,8 +13,9 @@ import {
   CircularProgress,
   makeStyles,
   Typography,
+  IconButton,
 } from '@material-ui/core';
-
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import Alert from '@material-ui/lab/Alert';
 import { PRODUCT_UPDATE_RESET } from '../reducers/types';
 
@@ -49,6 +51,11 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop: theme.spacing(1),
   },
+  uploadBox: {
+    display: 'flex',
+    // justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 }));
 
 const ProductEditPage = ({ match, history }) => {
@@ -61,6 +68,7 @@ const ProductEditPage = ({ match, history }) => {
   const [countInStock, setCountInStock] = useState(0);
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -92,6 +100,26 @@ const ProductEditPage = ({ match, history }) => {
       }
     }
   }, [product, productId, dispatch, history, successUpdate]);
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    setUploading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+      const { data } = await axios.post('/api/upload', formData, config);
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -173,12 +201,11 @@ const ProductEditPage = ({ match, history }) => {
                 />
               </Box>
 
-              <Box pb={2}>
+              <Box pb={2} className={classes.uploadBox}>
                 <TextField
                   id='outlined-basic-image'
                   type='text'
-                  fullWidth
-                  label='Image'
+                  label='Enter Image URL'
                   name='image'
                   size='small'
                   variant='outlined'
@@ -186,7 +213,29 @@ const ProductEditPage = ({ match, history }) => {
                   onChange={(e) => setImage(e.target.value)}
                   required
                 />
+
+                <input
+                  style={{ paddingLeft: '1rem' }}
+                  accept='image/*'
+                  id='icon-button-file'
+                  onChange={uploadFileHandler}
+                  type='file'
+                />
+                <label htmlFor='icon-button-file'>
+                  <IconButton
+                    color='primary'
+                    aria-label='upload picture'
+                    component='span'
+                  >
+                    <AddAPhotoIcon />
+                  </IconButton>
+                </label>
               </Box>
+              {uploading && (
+                <div className={classes.loadBox}>
+                  <CircularProgress />
+                </div>
+              )}
 
               <Box pb={2}>
                 <TextField
