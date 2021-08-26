@@ -39,14 +39,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HomePage = () => {
+const HomePage = ({ match }) => {
+  const keyword = match.params.keyword;
   const classes = useStyles();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <Fragment>

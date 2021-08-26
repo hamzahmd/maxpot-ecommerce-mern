@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../actions/userActions';
+import SearchBox from './SearchBox';
 import {
   AppBar,
   Toolbar,
@@ -76,6 +77,8 @@ const Header = () => {
           <Typography variant='h6' className={classes.title}>
             MAXPOT
           </Typography>
+
+          <Route render={({ history }) => <SearchBox history={history} />} />
 
           {userInfo && userInfo.isAdmin ? (
             userInfo &&
