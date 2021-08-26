@@ -33,7 +33,12 @@ function App() {
           <Route path='/profile' component={ProfilePage} />
           <Route path='/shipping' component={ShippingPage} />
           <Route path='/admin/userlist' component={UserListPage} />
-          <Route path='/admin/productlist' component={ProductListPage} />
+          <Route path='/admin/productlist' component={ProductListPage} exact />
+          <Route
+            path='/admin/productlist/:pageNumber'
+            component={ProductListPage}
+            exact
+          />
           <Route path='/admin/orderlist' component={OrderListPage} />
           <Route path='/admin/user/:id/edit' component={UserEditPage} />
           <Route path='/admin/product/:id/edit' component={ProductEditPage} />
@@ -42,7 +47,13 @@ function App() {
           <Route path='/order/:id' component={OrderPage} />
           <Route path='/product/:id' component={ProductPage} />
           <Route path='/cart/:id?' component={CartPage} />
-          <Route path='/search/:keyword' component={HomePage} />
+          <Route path='/search/:keyword' component={HomePage} exact />
+          <Route path='/page/:pageNumber' component={HomePage} exact />
+          <Route
+            path='/search/:keyword/page/:pageNumber'
+            component={HomePage}
+            exact
+          />
           <Route path='/' component={HomePage} exact />
         </Container>
       </main>

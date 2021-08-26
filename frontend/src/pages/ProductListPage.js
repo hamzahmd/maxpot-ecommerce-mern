@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import Paginate from '../Components/Paginate';
 import {
   listProducts,
   deleteProduct,
@@ -50,11 +51,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductListPage = ({ history, match }) => {
+  const pageNumber = match.params.pageNumber || 1;
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, page, pages } = productList;
 
   const productDelete = useSelector((state) => state.productDelete);
   const {
@@ -83,7 +85,7 @@ const ProductListPage = ({ history, match }) => {
     if (successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`);
     } else {
-      dispatch(listProducts());
+      dispatch(listProducts('', pageNumber));
     }
   }, [
     dispatch,
@@ -92,6 +94,7 @@ const ProductListPage = ({ history, match }) => {
     successDelete,
     successCreate,
     createdProduct,
+    pageNumber,
   ]);
 
   const deleteHandler = (id) => {
@@ -157,48 +160,51 @@ const ProductListPage = ({ history, match }) => {
           <Alert severity='error'>{error}</Alert>
         </div>
       ) : (
-        <TableContainer component={Paper}>
-          <Table aria-label='simple table'>
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>NAME</TableCell>
-                <TableCell>PRICE</TableCell>
-                <TableCell>CATEGORY</TableCell>
-                <TableCell>BRAND</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {products.map((product) => (
-                <TableRow key={product._id}>
-                  <TableCell>{product._id}</TableCell>
-                  <TableCell>{product.name}</TableCell>
-                  <TableCell>${product.price}</TableCell>
-                  <TableCell>{product.category}</TableCell>
-                  <TableCell>{product.brand}</TableCell>
-                  <TableCell className={classes.funcBtn}>
-                    <IconButton
-                      size='small'
-                      component={Link}
-                      to={`/admin/product/${product._id}/edit`}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      size='small'
-                      onClick={() => {
-                        deleteHandler(product._id);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
+        <>
+          <TableContainer component={Paper}>
+            <Table aria-label='simple table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell>NAME</TableCell>
+                  <TableCell>PRICE</TableCell>
+                  <TableCell>CATEGORY</TableCell>
+                  <TableCell>BRAND</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {products.map((product) => (
+                  <TableRow key={product._id}>
+                    <TableCell>{product._id}</TableCell>
+                    <TableCell>{product.name}</TableCell>
+                    <TableCell>${product.price}</TableCell>
+                    <TableCell>{product.category}</TableCell>
+                    <TableCell>{product.brand}</TableCell>
+                    <TableCell className={classes.funcBtn}>
+                      <IconButton
+                        size='small'
+                        component={Link}
+                        to={`/admin/product/${product._id}/edit`}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        size='small'
+                        onClick={() => {
+                          deleteHandler(product._id);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Paginate pages={pages} page={page} isAdmin={true} />
+        </>
       )}
     </>
   );

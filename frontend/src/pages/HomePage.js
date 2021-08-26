@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import Product from '../Components/Product';
+
 import {
   Grid,
   Typography,
@@ -9,6 +10,7 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
+import Paginate from '../Components/Paginate';
 
 const useStyles = makeStyles((theme) => ({
   coverImage: {
@@ -44,13 +46,14 @@ const useStyles = makeStyles((theme) => ({
 
 const HomePage = ({ match }) => {
   const keyword = match.params.keyword;
+  const pageNumber = match.params.pageNumber || 1;
   const classes = useStyles();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, pages, page } = productList;
   useEffect(() => {
-    dispatch(listProducts(keyword));
-  }, [dispatch, keyword]);
+    dispatch(listProducts(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
 
   return (
     <Fragment>
@@ -72,13 +75,21 @@ const HomePage = ({ match }) => {
           <Alert severity='error'>{error}</Alert>{' '}
         </div>
       ) : (
-        <Grid container spacing={3}>
-          {products.map((product) => (
-            <Grid item key={product._id} xs={12} sm={6} md={4} lg={3} xl={3}>
-              <Product product={product} />
-            </Grid>
-          ))}
-        </Grid>
+        <>
+          <Grid container spacing={3}>
+            {products.map((product) => (
+              <Grid item key={product._id} xs={12} sm={6} md={4} lg={3} xl={3}>
+                <Product product={product} />
+              </Grid>
+            ))}
+          </Grid>
+
+          <Paginate
+            pages={pages}
+            page={page}
+            keyword={keyword ? keyword : ''}
+          />
+        </>
       )}
     </Fragment>
   );
