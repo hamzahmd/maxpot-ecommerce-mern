@@ -12,6 +12,7 @@ import {
   Menu,
   MenuItem,
   Tooltip,
+  Badge,
 } from '@material-ui/core';
 
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -43,6 +44,9 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const classes = useStyles();
+
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
@@ -182,9 +186,6 @@ const Header = () => {
             </Tooltip>
           )}
 
-          {/* {}
-          {} */}
-
           <Tooltip title='Cart'>
             <IconButton
               component={Link}
@@ -192,7 +193,9 @@ const Header = () => {
               variant='contained'
               color='inherit'
             >
-              <ShoppingCartIcon />
+              <Badge color='secondary' badgeContent={cartItems.length}>
+                <ShoppingCartIcon />
+              </Badge>
             </IconButton>
           </Tooltip>
 
