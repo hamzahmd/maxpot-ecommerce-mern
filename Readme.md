@@ -2,7 +2,7 @@
 
 MAXPOT (Maximum Potential) is a fully functional Ecommerce store built with MERN Stack and Redux for Mixed Martial Arts Products.
 
-## [Visit Site](https://maxpot.heroku.com/)
+## [Visit Site](https://maxpot.herokuapp.com/)
 
 ![Overview](https://i.ibb.co/zNch5jz/1.png)
 
