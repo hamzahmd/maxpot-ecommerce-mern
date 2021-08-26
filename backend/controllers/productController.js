@@ -84,9 +84,10 @@ const updateProduct = asyncHandler(async (req, res) => {
 const createProductReview = asyncHandler(async (req, res) => {
   const { rating, comment } = req.body;
   const product = await Product.findById(req.params.id);
+
   if (product) {
     const alreadyReviewed = product.reviews.find(
-      (rev) => rev.user.toSting() === req.user._id.toSting()
+      (r) => r.user.toString() === req.user._id.toString()
     );
     if (alreadyReviewed) {
       res.status(400);
@@ -100,10 +101,11 @@ const createProductReview = asyncHandler(async (req, res) => {
     };
 
     product.reviews.push(review);
-    product.numReviews = product.review.length;
+    product.numReviews = product.reviews.length;
     product.rating =
       product.reviews.reduce((acc, item) => item.rating + acc, 0) /
       product.reviews.length;
+
     await product.save();
     res.status(201).json({ message: 'Review Added' });
   } else {
