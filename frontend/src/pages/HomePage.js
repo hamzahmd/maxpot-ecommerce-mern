@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     textAlign: 'center',
+    [theme.breakpoints.down('sm')]: {
+      height: '30vh',
+    },
   },
   alertM: {
     width: '100%',

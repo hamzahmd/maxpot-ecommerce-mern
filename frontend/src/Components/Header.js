@@ -13,6 +13,7 @@ import {
   MenuItem,
   Tooltip,
   Badge,
+  Hidden,
 } from '@material-ui/core';
 
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -82,7 +83,10 @@ const Header = () => {
             MAXPOT
           </Typography>
 
-          <Route render={({ history }) => <SearchBox history={history} />} />
+          <Hidden only='xs'>
+            {' '}
+            <Route render={({ history }) => <SearchBox history={history} />} />
+          </Hidden>
 
           {userInfo && userInfo.isAdmin ? (
             userInfo &&
@@ -223,6 +227,19 @@ const Header = () => {
           </Tooltip>
         </Toolbar>
       </AppBar>
+      <Hidden only={['xl', 'lg', 'md', 'sm']}>
+        {' '}
+        <div
+          style={{
+            paddingTop: '1rem',
+            display: 'flex',
+
+            flexDirection: 'row-reverse',
+          }}
+        >
+          <Route render={({ history }) => <SearchBox history={history} />} />
+        </div>
+      </Hidden>
     </header>
   );
 };
