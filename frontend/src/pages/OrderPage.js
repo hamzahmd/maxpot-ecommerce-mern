@@ -77,7 +77,7 @@ const OrderPage = ({ match, history }) => {
     if (!userInfo) {
       history.push('/login');
     }
-    if (!order || successDeliver || successPay) {
+    if (!order || successDeliver || successPay || order._id !== orderId) {
       dispatch({ type: ORDER_DELIVERD_RESET });
       dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));

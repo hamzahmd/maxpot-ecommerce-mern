@@ -19,6 +19,7 @@ import {
   ORDER_DELIVERD_FAIL,
   ORDER_DELIVERD_SUCCESS,
   ORDER_DELIVERD_REQUEST,
+  CART_CLEAR_ITEMS,
 } from '../reducers/types';
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -31,6 +32,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     } = getState();
     const config = {
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -39,6 +41,11 @@ export const createOrder = (order) => async (dispatch, getState) => {
       type: ORDER_CREATE_SUCCESS,
       payload: data,
     });
+    dispatch({
+      type: CART_CLEAR_ITEMS,
+      payload: data,
+    });
+    localStorage.removeItem('cartItems');
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
