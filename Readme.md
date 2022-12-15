@@ -2,7 +2,7 @@
 
 MAXPOT (Maximum Potential) is a fully functional Ecommerce store built with MERN Stack and Redux for Mixed Martial Arts Products.
 
-## [Visit Site](https://maxpot.herokuapp.com/)
+## [Visit Site](https://mern-maxpot.onrender.com/)
 
 ![Overview](https://i.ibb.co/zNch5jz/1.png)
 
@@ -57,7 +57,7 @@ All these dependencies are installed by the Node Package Manager (NPM)
 
 ## Hosting
 
-The application is hosted on Heroku with heroku cli.
+Previously, the application was hosted on Heroku with heroku cli. Now both frontend and backend API are hosted separately on Render
 
 ## Usage
 
